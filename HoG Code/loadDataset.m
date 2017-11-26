@@ -1,5 +1,6 @@
+
 %% Load dataset 
-path = 'C:/Courses/Computer Vision/project/Datasets/Triesch'
+path = 'C:\Courses\Computer Vision\ASL Gesture Recognition\Datasets\Triesch'
 extension = 'pgm'
 
 files = dir(strcat(path,'/*.',extension))
@@ -21,7 +22,12 @@ for i = 1:nFiles
 end
 numImageCategories = max(size(unique(letter)));
 letterCat = categorical(cellstr(letter'))
-
+%% Check The Images
+for i= 1:nFiles
+    imshow(predictorCell{i}.im(:,:,1));
+    predictorCell{i}
+    input('yo')
+end;
 %% Split into training and test modules
 
 [trainPredictor, trainLetter, testPredictor, testLetter] = splitdataset(predictorCell,letterCat,0.8);
@@ -33,6 +39,21 @@ for i=1:nTrain
     trainImages(:,:,:,i) = trainPredictor{i}.im;
 end
 
+for i=1:nTrain
+    trainImagesGray(:,:,i) = trainPredictor{i}.im(:,:,1);
+end
+
+
+%% HoG Features
+
+for i=1:nTrain
+    [hogFeatures,Viz] = extractHOGFeatures(trainImagesGray(:,:,i));
+    subplot(2,1,1);
+    imshow(trainImagesGray(:,:,i));
+    subplot(2,1,2);
+    plot(Viz)
+    input('Ghe')
+end;
 %% Train the CNN
 % Creating the input Layer
 [height, width, numChannels ~] = size(trainImages);

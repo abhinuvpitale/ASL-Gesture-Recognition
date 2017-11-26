@@ -59,11 +59,12 @@ while(cap.isOpened()):
     else:
         cv2.putText(img,"This is 1", (50,50),\
                     cv2.FONT_HERSHEY_SIMPLEX, 2, 2)
-    #cv2.imshow('drawing', drawing)
-    #cv2.imshow('end', crop_img)
+    cv2.imshow('drawing', drawing)
+    cv2.imshow('end', crop_img)
     cv2.imshow('Gesture', img)
     all_img = np.hstack((drawing, crop_img))
     cv2.imshow('Contours', all_img)
     k = cv2.waitKey(10)
     if k == 27:
         break
+    print k
