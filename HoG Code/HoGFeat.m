@@ -5,7 +5,7 @@ predictor = predictor.predictorCell;
 nPredictor = max(size(predictor));
 nBlackWhite = 1;
 for i = 1:nPredictor
-    if predictor{i}.sample == '1'
+    if predictor{i}.sample ~= '4'
         predictorBW{nBlackWhite} = predictor{i};
         nBlackWhite = nBlackWhite + 1;
     end
@@ -29,7 +29,7 @@ end;
 
 %% Split into Training and Testing Data
 
-[trainPredictor, trainLetter, testPredictor, testLetter] = splitdataset(predictorBW,letter,0.8);
+[trainPredictor, trainLetter, testPredictor, testLetter] = splitdataset(predictorBW,letter,0.3);
 nTrain = max(size(trainPredictor));
 nTest = max(size(testPredictor));
 
@@ -55,5 +55,5 @@ for i = 1:nTest
 end;
 
 YTrue = double(testLetter)';
-Yhat-YTrue
+truePositive = max(size(find(Yhat-YTrue == 0)))/max(size(YTrue));
 
