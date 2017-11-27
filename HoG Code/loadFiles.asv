@@ -1,0 +1,22 @@
+function [originalIm,thresholdIm,area,defects,hull] = loadFiles(path,files)
+    nFiles = size(files,1);
+    countOriginal = 1;
+    countThreshold = 1
+    for i = 1:nFiles
+        currFileName = files(i).name
+        if currFileName.name
+        if currFileName.name(end-3:end) == 'jpg'
+            if currFileName.name(1:3) == 'ori'
+                originalIm{countOriginal} = imread(strcat(path,'/',currFileName.name))
+                countOriginal = countOriginal + 1;
+            end
+            if currFileName.name(1:3) == 'thr'
+                thresholdIm{countThreshold} = imread(strcat(path,'/',currFileName.name))
+                thresholdIm = countThreshold + 1;
+            end            
+        end   
+    end
+    defects = 0;
+    area = 0;
+    hull = 0;
+end
