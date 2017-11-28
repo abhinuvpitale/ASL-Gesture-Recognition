@@ -30,10 +30,12 @@ while(cap.isOpened()):
     drawing = np.zeros(crop_img.shape,np.uint8)
     cv2.drawContours(drawing,[cnt],0,(0,255,0),0)
     cv2.drawContours(drawing,[hull],0,(0,0,255),0)
+
     hull = cv2.convexHull(cnt,returnPoints = False)
     hull_1 = cv2.convexHull(cnt,returnPoints = True)
     defects = cv2.convexityDefects(cnt,hull)
     count_defects = 0
+    #cv2.drawContours(drawing,[defects],0,(0,0,255),0)
     cv2.drawContours(thresh1, contours, -1, (0,255,0), 3)
     for i in range(defects.shape[0]):
         s,e,f,d = defects[i,0]
@@ -60,7 +62,22 @@ while(cap.isOpened()):
         cv2.circle(crop_img,centerMass,7,[100,0,255],2)
         font = cv2.FONT_HERSHEY_SIMPLEX
         cv2.putText(crop_img,'Center',tuple(centerMass),font,2,(255,255,255),2) 
+
+        #xx = tuple(map(tuple, hull_1[1]))
+        #cv2.circle(crop_img,tuple(a,b),1,[0,255,0],2)
         #cv2.circle(crop_img,far,5,[0,0,255],-1)
+
+         #Get fingertip points from contour hull
+    #If points are in proximity of 80 pixels, consider as a single point in the group
+        """finger = []
+        for i in range(0,len(hull)-1):
+            if (np.absolute(hull[i][0][0] - hull[i+1][0][0]) > 80) or ( np.absolute(hull[i][0][1] - hull[i+1][0][1]) > 80):
+                if hull[i][0][1] <500 :
+                    finger.append(hull[i][0])
+        """            
+
+
+
     if count_defects == 1:
         cv2.putText(img,"This is 2", (50,50), cv2.FONT_HERSHEY_SIMPLEX, 2, 2)
     elif count_defects == 2:
@@ -87,19 +104,29 @@ while(cap.isOpened()):
     elif k == 83:
         number1 = number1+1
         number2 = str(number1)
-        if int(number2) <= 30:
-            cv2.imwrite(r'D:\VT\Comp Vision Assignments\Project\Code25_11_17\b\thresh_b'+number2+'.jpg',thresh1)
-            cv2.imwrite(r'D:\VT\Comp Vision Assignments\Project\Code25_11_17\b\original_b'+number2+'.jpg',Original[100:300, 100:300])
-            f1 = open(r'.\b\b_hull.txt','a')
-            f2 = open(r'.\b\b_convexity.txt','a')
-            f3 = open(r'.\b\b_area.txt','a')
-            print s
-            f1.write(str(hull_1))
-            f1.write('\n@ @\n')
-            f2.write(str(defects))
-            f2.write('\n@ @\n')
-            f3.write(str(max_area))
-            f3.write('\n@ @\n')
+        if int(number2) <= 10:
+            #print hull[1][0][0]
+            cv2.imwrite(r'D:\VT\Comp Vision Assignments\Project\Code25_11_17\v\thresh_b'+number2+'.jpg',thresh1)
+            cv2.imwrite(r'D:\VT\Comp Vision Assignments\Project\Code25_11_17\v\original_b'+number2+'.jpg',Original[100:300, 100:300])
+            f1 = open(r'.\v\v_hull.txt','a')
+            f2 = open(r'.\v\v_convexity.txt','a')
+            f3 = open(r'.\v\v_area.txt','a')
+            f4 = open(r'.\v\v_bounding_rect.txt','a')
+            #print s
+            string1 = str(hull_1)
+            string1 = string1.replace('[','').replace(']','')
+            string1 = string1.replace('\n\n',',')
+            #print string1S
+            f1.write(string1)
+            f1.write('\n')
+            string1 = str(defects)
+            string1 = string1.replace('[','').replace(']','')
+            string1 = string1.replace('\n\n',',')
+            f2.write(string1)
+            f2.write('\n')
+            #f2.write('\n'+str(s)+','+str(e)+','+str(f)+','+str(d)+'\n')
+            f3.write(str(max_area)+'\n')
+            f4.write(str(x)+','+str(y)+','+str(x+w)+','+str(y+h)+'\n')
             #f.write()
             f1.close()
             f2.close()
