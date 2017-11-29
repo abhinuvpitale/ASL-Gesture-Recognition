@@ -1,5 +1,7 @@
 function [originalIm,thresholdIm,area,defects,hull] = loadFiles(path,files)
     nFiles = size(files,1);
+    originalIm = {};
+    thresholdIm = {};
     countOriginal = 1;
     countThreshold = 1;
     for i = 1:nFiles

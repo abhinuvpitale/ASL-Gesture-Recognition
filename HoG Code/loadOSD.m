@@ -1,23 +1,22 @@
-clc;
-clear all;
-close all;
+function accuracy = loadOSD()
+
 
 %% Load DataSets
 
 path = 'C:\Courses\Computer Vision\ASL Gesture Recognition\Datasets\osd\Dataset';
-dirFolders = dir(path)
+dirFolders = dir(path);
 
 letter = ['abcdefghijklmnopqrstuvwxyz'];
 count = 1;
 for i=3:size(dirFolders,1)
-    if size(dirFolders(i).name,2) == 1
-        dataset.letter = dirFolders(i).name;
-        newPath = strcat(path,'\',dirFolders(i).name);
-        files = dir(newPath);
-        [dataset.originalIm,dataset.thresholdIm,dataset.area,dataset.defects,dataset.hull] = loadFiles(newPath,files);
-        datasets{count} = dataset;
-        count = count + 1;
-    end    
+    %if size(dirFolders(i).name,2) ~= 1
+    dataset.letter = dirFolders(i).name(1);
+    newPath = strcat(path,'\',dirFolders(i).name);
+    files = dir(newPath);
+    [dataset.originalIm,dataset.thresholdIm,dataset.area,dataset.defects,dataset.hull] = loadFiles(newPath,files);
+    datasets{count} = dataset;
+    count = count + 1;
+    %end
 end
 nDatasets = count-1;
 
@@ -49,6 +48,23 @@ testHog = double(reshape(cell2mat(testHog),[],size(testHog,2)));
 mdl = fitcecoc(trainHog',trainLetter');
 
 %% Part3 - Test the SVM
-predict(mdl,testHog')
+Y = predict(mdl,testHog')
+accuracy = numel(find(Y-testLetter' == 0))/numel(Y) * 100
 
+%% Part4 - Data Augmentation
+% Do NOT execute this if the flipped images are already created.
 
+% for i = 1:nDatasets
+%     dataset = datasets{i};
+%     newPath = strcat(path,'\',dataset.letter,'Flip');
+%     if ~exist(newPath)
+%         mkdir(strcat(path,'\',dataset.letter,'Flip'));
+%     end;
+%     nSize = size(dataset.originalIm,2);
+%     for j = 1:nSize
+%         imwrite(flipdim(dataset.originalIm{1},2),strcat(newPath,'\originalF_',dataset.letter,num2str(j),'.jpg'),'jpg');
+%         imwrite(flipdim(dataset.thresholdIm{1},2),strcat(newPath,'\threshF_',dataset.letter,num2str(j),'.jpg'),'jpg');     
+%     end
+% end;
+
+end
