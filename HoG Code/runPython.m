@@ -4,8 +4,7 @@ clear all;
 mdl = load('osdAugSVM.mat');
 mdl = mdl.mdl;
 figure(1);
-while true
-    
+while true    
     system('python imgSave.py');
     thresIm = imread('threshImg.jpg');
     figure(1);
@@ -17,6 +16,5 @@ while true
     hog = extractHOGFeatures(thresIm);
     prediction = predict(mdl,hog)  
     text(1,1,prediction,'Color','red','FontSize',20)
-    
     
 end;
