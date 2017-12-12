@@ -1,7 +1,7 @@
 clc;
 close  all;
 clear all;
-mdl = load('osdAugSVM.mat');
+mdl = load('osdNewLetterSVM.mat');
 mdl = mdl.mdl;
 figure(1);
 while true    
