@@ -49,11 +49,10 @@ clearvars nThreshIm
 
 for i = 1:nObservations
     bIm{i} = getBoundary(threshIm{i});
-    imwrite(bIm{i}.boundedImage,strcat('.\bounded\bound',num2str(i),'.jpg'));
+    %imwrite(bIm{i}.boundedImage,strcat('.\bounded\bound',num2str(i),'.jpg'));
 end;    
 
-%% get Area
-
+%% get Ratio of Areas
 for i = 1:nObservations
     ratio(i) = bIm{i}.ratio;
 end;
