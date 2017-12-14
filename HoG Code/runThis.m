@@ -56,13 +56,57 @@ end;
 for i = 1:nObservations
     ratio(i) = bIm{i}.ratio;
 end;
-%%
-for i =1:nObservations
-    boundaryFeatures{i} = extractHOGFeatures(threshIm{i});
+%% see sizes
+for i = 1:nObservations
+    height(i) = bIm{i}.height;
+    width(i) = bIm{i}.width;
 end;
-    
+%% PCA
+data = [height;width;ratio]'
+data = zscore(data)
 
-k = 0.8;
-[trainHog trainLetter testHog testLetter] = splitdataset(hogThreshIm,response,k) ;
-trainHog = double(reshape(cell2mat(trainHog),[],size(trainHog,2)));
-testHog = double(reshape(cell2mat(testHog),[],size(testHog,2)));
+[PC,score,latent,ts,explained]=pca(data);
+
+dataset = 'abcdgilvy'
+
+figure(2)
+hold on;
+for i = 1:numel(dataset)
+  plot(score(find(response == dataset(i)),1),score(find(response == dataset(i)),2),'.','MarkerSize',15)  
+end;
+
+%% try Fast features
+for i = 1:nObservations
+    temp = detectSURFFeatures(bIm{i}.boundedImage);
+    boo(i) = temp.Count;
+end;
+
+%% rough Space
+
+for i = 100:nObservations
+    temp = bIm{i}.boundedImage;
+    se = strel('disk',1);
+    figure(1);
+    subplot(2,2,1);
+    imshow(temp);
+    subplot(2,2,2);
+    imshow(imopen(temp,se));
+    subplot(2,2,3);
+    imshow(imclose(temp,se));
+    subplot(2,2,4);
+    imshow(temp - imerode(temp,se))
+    pause(0.1)
+end;
+
+%%  
+%%
+% 
+% for i =1:nObservations
+%     boundaryFeatures{i} = extractHOGFeatures(threshIm{i});
+% end;
+%     
+% 
+% k = 0.8;
+% [trainHog trainLetter testHog testLetter] = splitdataset(hogThreshIm,response,k) ;
+% trainHog = double(reshape(cell2mat(trainHog),[],size(trainHog,2)));
+% testHog = double(reshape(cell2mat(testHog),[],size(testHog,2)));
