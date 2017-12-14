@@ -98,15 +98,27 @@ for i = 100:nObservations
     pause(0.1)
 end;
 
-%%  
-%%
-% 
-% for i =1:nObservations
-%     boundaryFeatures{i} = extractHOGFeatures(threshIm{i});
-% end;
-%     
-% 
-% k = 0.8;
-% [trainHog trainLetter testHog testLetter] = splitdataset(hogThreshIm,response,k) ;
-% trainHog = double(reshape(cell2mat(trainHog),[],size(trainHog,2)));
-% testHog = double(reshape(cell2mat(testHog),[],size(testHog,2)));
+%% I think I need to normalise the bounded Boxes before feature extraction.
+
+for i = 1:nObservations
+    bImResized{i} = imresize(bIm{i}.boundedImage,[150,150])
+    imshow(bImResized{i})
+    pause(0.1)
+end;
+%% Train a SVM on the boundedbox region using HoG
+
+
+for i =1:nObservations
+    boundaryFeatures{i} = extractHOGFeatures(bImResized{i});
+end;
+    
+
+k = 0.99;
+[trainHog trainLetter testHog testLetter] = splitdataset(boundaryFeatures,response,k) ;
+trainHog = double(reshape(cell2mat(trainHog),[],size(trainHog,2)));
+testHog = double(reshape(cell2mat(testHog),[],size(testHog,2)));
+
+mdl = fitcecoc(trainHog',trainLetter');
+
+Y = predict(mdl,testHog')
+accuracy = numel(find(Y-testLetter' == 0))/numel(Y) * 100
