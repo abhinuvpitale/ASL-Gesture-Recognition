@@ -2,8 +2,11 @@ clc;
 close  all;
 clear all;
 
-%% Pre-presentation Run
-mdl = load('osdNewLetterSVM.mat');
+%% Run the model
+
+%mdl = load('osdNewLetterSVM.mat');
+mdl = load('boundaryOSD_SVM.mat'); % uses the boundary box extracted Hog features from the osd augmented 10 letter dataset.
+
 mdl = mdl.mdl;
 figure(1);
 while true    
@@ -15,7 +18,10 @@ while true
     orgIm = imread('origImg.jpg');
     figure(2);
     imshow(orgIm);
-    hog = extractHOGFeatures(thresIm);
+    
+    bIm = getBoundary(thresIm);
+    hog = extractHOGFeatures(imresize(bIm.boundedImage,[150 150]));
+    %hog = extractHOGFeatures(thresIm);
     prediction = predict(mdl,hog)  
     text(1,1,prediction,'Color','red','FontSize',20)
     
@@ -41,5 +47,9 @@ while true
     edgeIm = bIm - imerode(bIm,strel('disk',1));
     figure(4);
     imshow(edgeIm)
+    
+    figure(5);
+    erode = imerode(thresIm,strel('disk',10));
+    imshow(erode)
     
 end;
