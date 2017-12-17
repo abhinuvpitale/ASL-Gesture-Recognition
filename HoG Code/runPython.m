@@ -10,7 +10,7 @@ mdl = load('boundaryOSD_SVM.mat'); % uses the boundary box extracted Hog feature
 mdl = mdl.mdl;
 figure(1);
 while true    
-    system('python imgSave.py');
+    system('py imgSave.py');
     thresIm = imread('threshImg.jpg');
     figure(1);
     title('Thresholded Image');
@@ -30,7 +30,7 @@ end;
 %% Feature Extractor
 fileID = fopen('Dataset.txt','w');
 while true    
-    system('python imgSave.py');
+    system('py imgSave.py');
     thresIm = imread('threshImg.jpg');
     figure(1);
     title('Thresholded Image');
