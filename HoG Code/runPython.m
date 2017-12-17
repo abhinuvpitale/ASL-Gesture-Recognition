@@ -7,7 +7,7 @@ mdl = load('osdNewLetterSVM.mat');
 mdl = mdl.mdl;
 figure(1);
 while true    
-    system('python imgSave.py');
+    system('py imgSave.py');
     thresIm = imread('threshImg.jpg');
     figure(1);
     title('Thresholded Image');
@@ -24,7 +24,7 @@ end;
 %% Feature Extractor
 
 while true    
-    system('python imgSave.py');
+    system('py imgSave.py');
     thresIm = imread('threshImg.jpg');
     figure(1);
     title('Thresholded Image');
