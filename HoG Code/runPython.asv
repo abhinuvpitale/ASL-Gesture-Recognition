@@ -84,11 +84,8 @@ end;
 %% Final Presentation
 mdl = load('boundaryOSD_SVM.mat'); % uses the boundary box extracted Hog features from the osd augmented 10 letter dataset.
 mdl = mdl.mdl;
-totPred = '' ;
-lastPrediction = ' ';
-count = 1;
-lettersFile = fopen('letters.txt','w');
-    
+totPred = '' 
+lastPrediction = ' '
 while true
     
     system('python imgSave.py');
@@ -102,43 +99,33 @@ while true
     prediction = predict(mdl,hog)  ;
     if prediction ~= lastPrediction
         totPred = strcat(totPred ,prediction);
-        count = count + 1;
-        fprintf(lettersFile,prediction);
-    
     end
     lastPrediction = prediction;
     figure(1);
     imshow(orgIm);
-    title('Original Image');
-    rectangle('Position',[bIm.y bIm.x bIm.width bIm.height],'EdgeColor','r');
+    title('Original Image')
+    rectangle('Position',[bIm.y bIm.x bIm.width bIm.height],'EdgeColor','r')
     
     figure(2);
-    imshow(thresIm);
-    title('Binary Thresholded Image');
-    rectangle('Position',[bIm.y bIm.x bIm.width bIm.height],'EdgeColor','r');
+    imshow(thresIm)
+    title('Binary Thresholded Image')
+    rectangle('Position',[bIm.y bIm.x bIm.width bIm.height],'EdgeColor','r')
     
     mfig = figure(3);
     mTextBox = uicontrol('style','text');
     set(mTextBox,'FontSize',20);
     set(mTextBox,'String',totPred);
-    set(mTextBox,'Position',[1 1 600 60]);
-    mTextBox.Position;
+    set(mTextBox,'Position',[1 1 600 60])
+    mTextBox.Position
     
     figure(4);    
     imshow(bIm.boundedImage);
-    title('Bounded Image');
+    title('Bounded Image')
     %set(mTextBox,'Position',[100 100 1000 1000])
     
-    %fclose(lettersFile);
-    if count > 4
-        wordFile = fopen('words.txt','r');
-        word = fscanf(wordFile,'%s')
-        fgetl(wordFile);
-        
-        %lettersFile = fopen('letters.txt','r');
-        fgetl(lettersFile);
-        fclose(lettersFile);
-        lettersFile = fopen('letters.txt','w');    
-        count = 1;
-    end;
+    lettersFile = fopen('letters.txt','w');
+    fprintf(prediction)
+    fclose(lettersFile)
+    
+    if count(totPred)
 end
