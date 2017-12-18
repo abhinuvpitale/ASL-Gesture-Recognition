@@ -120,7 +120,7 @@ while true
     clf(f1)
     figure(f1)
     imshow(orgIm);
-    title('Original Image');
+    fig1.title('Original Image');
     rectangle('Position',[bIm.y bIm.x bIm.width bIm.height],'EdgeColor','r');
     
     clf(f2)
@@ -129,15 +129,14 @@ while true
     title('Binary Thresholded Image');
     rectangle('Position',[bIm.y bIm.x bIm.width bIm.height],'EdgeColor','r');
     
-    clf(f3)
-    figure(f3);
+    clf()
+    mfig = figure(3);
     mTextBox = uicontrol('style','text');
     set(mTextBox,'FontSize',20);
     set(mTextBox,'String',totPred);
     set(mTextBox,'Position',[1 1 600 60]);
    
-    clf(f4)
-    figure(f4);    
+    figure(4);    
     imshow(bIm.boundedImage);
     title('Bounded Image');
     %set(mTextBox,'Position',[100 100 1000 1000])
@@ -148,13 +147,12 @@ while true
         word = fscanf(wordFile,'%s')
         fgetl(wordFile);
         
-        clf(f5)
-        figure(f5);
+        mfig1 = figure(5);
         mTextBox1 = uicontrol('style','text');
         set(mTextBox1,'FontSize',20);
         set(mTextBox1,'String',strcat('Current Word -> ',word));
         set(mTextBox1,'Position',[1 1 600 60]);
-        totPred = strcat(totPred,'-')
+        
         %lettersFile = fopen('letters.txt','r');
         fgetl(lettersFile);
         fclose(lettersFile);
