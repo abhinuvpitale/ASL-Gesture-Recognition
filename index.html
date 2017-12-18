@@ -70,11 +70,14 @@
         <h1>Approach</h1>
         <p><img src = "Approach.jpg"></p>
         
-          <h3>Hand Segmentation</h3> <p>The otsu algorithm segments the image into background and foreground. The input </p>
-          <p><img src = "HandSegmentation.jpg" width=80%></p>
+          <h3>Hand Segmentation</h3> <p>The Otsu algorithm segments the image into background and foreground. The input image is the grayscaled gaussain blurred image. This method classifies the pixels based on their grayscale pixel values and cluster them into 2 regions. We used this method for hand segmentation due to its invariance to dynamic light conditions </p>
+          <p><img src = "imageSegmentation.jpg" width=80%></p>
 
-          <h3>Feature Extraction</h3><p>The created dataset contains images of letters a,b,c,d,g,i,l,v and y, recorded at different angles and at different distances wrt the camera. <br/>This variation is introduced in order to introduce tolerances for orientation and scale.
-          <a href="http://tinypic.com?ref=2nu6kvk" target="_blank"><img src="http://i66.tinypic.com/2nu6kvk.jpg" border="0" alt="Image and video hosting by TinyPic"></a>      
+          <h3>Feature Extraction</h3><p>Various features extracted for an image include the hull points, contour area, convexity defect coordinates, HoG features and bounding box. We particularly selected the HoG features due to clear distinction obtained for individual characters.   
+          <img src = "Features.jpg" width=60% >
+          <p><img src = "a2b_final.jpg" width=80%></p>
+          <p><img src = "c2d_final.jpg" width=80%></p>
+          
           <h4>Data Augmentation</h4>
           <p>Left-Right Hands -> We generate a set of rotated images from the existing images to help train our model to make it more robust.<br/>Tilt/Zoom -> Generated set of images with different levels of tilt and zoom to increase the variety of the training dataset.</p>
       </div>
