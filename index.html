@@ -1,105 +1,76 @@
-<!DOCTYPE html>
-<html lang="en"><head>  
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta charset="utf-8">
-  <title>Computer Vision Class Project
-  | ECE, Virginia Tech | Fall 2015: ECE 5554/4984</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="">
+<!DOCTYPE HTML>
+<html>
 
-<!-- Le styles -->  
-  <link href="css/bootstrap.css" rel="stylesheet">
-<style>
-body {
-padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-}
-.vis {
-color: #3366CC;
-}
-.data {
-color: #FF9900;
-}
-</style>
-  
-<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
-<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
+<head>
+  <title>American Sign Language Translator</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="style/style.css" />
 </head>
 
 <body>
-<div class="container">
-<div class="page-header">
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="index.html"><span class="logo_colour">American Sign Language Translator</span></a></h1>
+          <h2>ASL Fingerspeller</h2>
+        </div>
+      </div>
+      <div id="menubar">
+        <ul id="menu">
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li class="selected"><a href="index.html">Home</a></li>
+          <li><a href="examples.html">Datasets</a></li>
+          <li><a href="page.html">Approach</a></li>
+          <li><a href="contact.html">Contributors</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <p><div id="banner"></div></p>
+        
+	      
+       <div class = 'content_container'>   
+        <div id="content">
+        
+        <!-- insert the page content here -->
+        <h1>Introduction</h1>
+        <p>The only mode of offline communication for hearing-impaired persons is through sign language. Learning the sign language is convoluted and has many conventions. The aim of this project is to develop an American Sign Language translator in order to mitigate the aforementioned difficulties. Another aim of this project is to develop a hand gesture recognition system to establish human computer interaction.</p>
+         
+        </div>
+        <div id = 'content_video'>
+        
+        <!-- insert your sidebar items here -->
+         <iframe width="480" height="315"
+         src="https://www.youtube.com/embed/GhI2VwPll0k">
+         </iframe>
+                
+        </div>
 
-<!-- Title and Name --> 
-<h1>Your Title Here</h1> 
-<span style="font-size: 20px; line-height: 1.5em;"><strong>Your Name Here</strong></span><br>
-<span style="font-size: 18px; line-height: 1.5em;">Fall 2015 ECE 5554/4984 Computer Vision: Class Project</span><br>
-<span style="font-size: 18px; line-height: 1.5em;">Virginia Tech</span>
-<hr>
+      </div>
+        <div id="content1">
+        <!-- insert the page content here -->
+        <h1>Datasets Used</h1>
+        <p>The code was first tested with the Triesch Dataset, after which we created our own dataset, to suit our testing conditions (unideal) as well as, expand our letter-base</p>
+        
+          <h3>Triesch Dataset</h3> <p>Triesch dataset contains letters a,b,c and v against 3 different backgrounds as shown below.<p>
+          <img src="Triesch.jpg"></li>
 
-Please see <a href="http://vision.cs.utexas.edu/projects/adapted_attributes/">this</a> for an example of how to lay out the various details of your project. You may need to provide more details than this, beause you will not be submitting an associated paper to accompany the webpage. So the page should be self-contained
-
-<!-- Goal -->
-<h3>Abstract</h3>
-
-One or two sentences on the motivation behind the problem you are solving. One or two sentences describing the approach you took. One or two sentences on the main result you obtained.
-<br><br>
-<!-- figure -->
-<h3>Teaser figure</h3>
-A figure that conveys the main idea behind the project or the main application being addressed.
-<br><br>
-<!-- Main Illustrative Figure --> 
-<div style="text-align: center;">
-<img style="height: 200px;" alt="" src="mainfig.jpg">
-</div>
-
-<br><br>
-<!-- Introduction -->
-<h3>Introduction</h3>
-Motivation behind the problem you are solving, what applications it has, any brief background on the particular domain you are working in (if not regular RBG photographs), etc. If you are using a new way to solve an existing problem, briefly mention and describe the existing approaches and tell us how your approach is new.
-
-<br><br>
-<!-- Approach -->
-<h3>Approach</h3>
-Describe very clearly and systematically your approach to solve the problem. Tell us exactly what existing implementations you used to build your system. Tell us what obstacles you faced and how you addressed them. Justify any design choices or judgment calls you made in your approach.
-
-<br><br>
-<!-- Results -->
-<h3>Experiments and results</h3>
-Provide details about the experimental set up (number of images/videos, number of datasets you experimented with, train/test split if you used machine learning algorithms, etc.). Describe the evaluation metrics you used to evaluate how well your approach is working. Include clear figures and tables, as well as illustrative qualitative examples if appropriate. Be sure to include obvious baselines to see if your approach is doing better than a naive approach (e.g. for classification accuracy, how well would a classifier do that made random decisions?). Also discuss any parameters of your algorithms, and tell us how you set the values of those parameters. You can also show us how the performance varies as you change those parameter values. Be sure to discuss any trends you see in your results, and explain why these trends make sense. Are the results as expected? Why?
-
-<br><br>
-
-<!-- Main Results Figure --> 
-<div style="text-align: center;">
-<img style="height: 300px;" alt="" src="results.png">
-</div>
-<br><br>
-
-<!-- Results -->
-<h3>Qualitative results</h3>
-Show several visual examples of inputs/outputs of your system (success cases and failures) that help us better understand your approach.
-<br><br>
-
-<!-- Main Results Figure --> 
-<div style="text-align: center;">
-<img style="height: 300px;" alt="" src="qual_results.png">
-</div>
-<br><br>
-
-
-
-
-  <hr>
-  <footer> 
-  <p>© You Name Here</p>
-  </footer>
-</div>
-</div>
-
-<br><br>
-
-</body></html>
+          <h3>User Dataset</h3><p>The created dataset contains images of letters a,b,c,d,g,h,i,l,v and y, recorded at different angles and at different distances wrt the camera. <br/>This variation is introduced in order to introduce tolerances for orientation and scale.
+          <img src="UserDataset.jpg">          
+          <h4>Data Augmentation</h4>
+          <p>Left-Right Hands -> We generate a set of rotated images from the existing images to help train our model to make it more robust.<br/>Tilt/Zoom -> Generated set of images with different levels of tilt and zoom to increase the variety of the training dataset.</p></p>
+      </div>
+    </div>
+    <div id="content_footer"></div>
+    <div id="footer">
+      <p><a href="index.html">Home</a> | <a href="examples.html">Examples</a> | <a href="page.html">A Page</a> | <a href="another_page.html">Another Page</a> | <a href="contact.html">Contact Us</a></p>
+      <p>Copyright &copy; textured_orbs | <a href="http://validator.w3.org/check?uri=referer">HTML5</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | <a href="http://www.html5webtemplates.co.uk">Website templates</a></p>
+    </div>
+  </div>
+</body>
+</html>
