@@ -127,13 +127,4 @@ accuracy = numel(find(Y-testLetter' == 0))/numel(Y) * 100
 %% Plot Ratios
 
 figure(1);
-scatter(double(response),ratio,'.');
-title('Ratio of the Bounding Boxes to original Image')
-
-figure(2);
-scatter(double(response),width,'.');
-title('Width of the Letter')
-
-figure(3);
-scatter(double(response),height,'.');
-title('Height of the Letter')
+scatter(ratio,double())

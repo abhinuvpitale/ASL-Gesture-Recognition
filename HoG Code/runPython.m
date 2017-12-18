@@ -135,6 +135,8 @@ while true
     set(mTextBox,'FontSize',20);
     set(mTextBox,'String',totPred);
     set(mTextBox,'Position',[1 1 600 60]);
+    
+    text(1,1,prediction,'Color','red','FontSize',20)
    
     clf(f4)
     figure(f4);    
