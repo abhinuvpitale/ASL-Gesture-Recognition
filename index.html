@@ -74,12 +74,11 @@
           <p><img src = "imageSegmentation.jpg" width=80%></p>
 
           <h3>Feature Extraction</h3><p>Various features extracted for an image include the hull points, contour area, convexity defect coordinates, HoG features and bounding box. We particularly selected the HoG features due to clear distinction obtained for individual characters.   
+          <p>The <i><b>Contour</b></i> in the image contains a set of all connected points which form the outline of the hand region.</br>The <i><b>Hull</b></i> contains the area included by connecting the extremities (bulging points) of the contour in the detected hand region.</br>The <i><b>Convexity Defects</b></i> are convex regions formed by the area between the fingers in the contour of the hand region. These are called defects because the area between the fingers forms a convex curve in an otherwise concave hull.</br>The <i><b>Bounding Box</b></i> is the minimum rectangle large enough to crop the entire hand region. Computing the ratio of contour area with respect to bounding box area makes the detection invariant to scale.</p>
           <img src = "Features.jpg" width=60% >
-          <p><img src = "a2b_final.jpg" width=80%></p>
-          <p><img src = "c2d_final.jpg" width=80%></p>
-          
-          <h4>Data Augmentation</h4>
-          <p>Left-Right Hands -> We generate a set of rotated images from the existing images to help train our model to make it more robust.<br/>Tilt/Zoom -> Generated set of images with different levels of tilt and zoom to increase the variety of the training dataset.</p>
+          <p><i><b>HoG Features</b></i> have been computed on the contours of each letter in the database. HOG features encode the occurrences of gradient orientations in portions of an image, so it is expected from them to describe characteristic edges regarding the shape of the hands. The figure below shows the HoG features for each letter in the dataset.</p>
+          <img src = "a2b_final.jpg" width=80%>
+          <img src = "c2d_final.jpg" width=80%>
       </div>
 
 
