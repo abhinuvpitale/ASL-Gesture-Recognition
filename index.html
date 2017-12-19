@@ -53,24 +53,24 @@
         <p>The code was first tested with the Triesch Dataset, after which we created our own dataset, to suit our testing conditions (unideal) as well as, expand our letter-base</p>
         
           <h3>Triesch Dataset</h3> <p>Triesch dataset contains letters a,b,c and v against 3 different backgrounds as shown below.</p>
-          <a href="http://tinypic.com?ref=25heao6" target="_blank"><img src="http://i65.tinypic.com/25heao6.jpg" border="0"></a>
+          <img src="http://i65.tinypic.com/25heao6.jpg" border="0"></a>
 
           <h3>User Dataset</h3><p>The created dataset contains images of letters a,b,c,d,g,i,l,v and y, recorded at different angles and at different distances wrt the camera. <br/>This variation is introduced in order to introduce tolerances for orientation and scale.
-          <a href="http://tinypic.com?ref=2nu6kvk" target="_blank"><img src="http://i66.tinypic.com/2nu6kvk.jpg" border="0"></a>      
+          <img src="http://i66.tinypic.com/2nu6kvk.jpg" border="0">    
           <h4>Data Augmentation</h4>
           <p>Left-Right Hands -> We generate a set of rotated images from the existing images to help train our model to make it more robust.<br/>Tilt/Zoom -> Generated set of images with different levels of tilt and zoom to increase the variety of the training dataset.</p>
       </div>
         <div id="content1">
         <!-- insert the page content here -->
         <h1>Approach</h1>
-        <p><a href="http://tinypic.com?ref=bf2cdv" target="_blank"><img src="http://i64.tinypic.com/bf2cdv.jpg" border="0" ></a></p>
+        <p><img src="http://i64.tinypic.com/bf2cdv.jpg" border="0" ></p>
         
           <h3>Hand Segmentation</h3> <p>The Otsu algorithm segments the image into background and foreground. The input image is the grayscaled gaussain blurred image. This method classifies the pixels based on their grayscale pixel values and cluster them into 2 regions. We used this method for hand segmentation due to its invariance to dynamic light conditions </p>
-          <p><a href="http://tinypic.com?ref=2qvzcpf" target="_blank"><img src="http://i65.tinypic.com/2qvzcpf.jpg" border="0"></a></p>
+          <p><img src="http://i65.tinypic.com/2qvzcpf.jpg" border="0"></p>
 
           <h3>Feature Extraction</h3><p>Various features extracted for an image include the hull points, contour area, convexity defect coordinates, HoG features and bounding box. We particularly selected the HoG features due to clear distinction obtained for individual characters.   
           <p>The <i><b>Contour</b></i> in the image contains a set of all connected points which form the outline of the hand region.</br>The <i><b>Hull</b></i> contains the area included by connecting the extremities (bulging points) of the contour in the detected hand region.</br>The <i><b>Convexity Defects</b></i> are convex regions formed by the area between the fingers in the contour of the hand region. These are called defects because the area between the fingers forms a convex curve in an otherwise concave hull.</br>The <i><b>Bounding Box</b></i> is the minimum rectangle large enough to crop the entire hand region. Computing the ratio of contour area with respect to bounding box area makes the detection invariant to scale.</p>
-          <a href="http://tinypic.com?ref=jb76gx" target="_blank"><img src="http://i68.tinypic.com/jb76gx.jpg" border="0"></a>
+          <img src="http://i68.tinypic.com/jb76gx.jpg" border="0">
           <p><i><b>HoG Features</b></i> have been computed on the contours of each letter in the database. HOG features encode the occurrences of gradient orientations in portions of an image, so it is expected from them to describe characteristic edges regarding the shape of the hands. The figure below shows the HoG features for each letter in the dataset.</p>
 
           <!-- Trigger the Modal -->
@@ -145,7 +145,7 @@
         </tr>        
         </table>
         <p>Initially we started training out models with only 4 different letters. However this was not enough as when the hands were changed(right -> left), the accuracy of the classifier fell.</br> We also included height, width and the ratio of the bounding box in training the classifier. These features were given more significance as they were better spread out as seen from the PCA plot.</p> 
-        <a href="http://tinypic.com?ref=ir1i6v" target="_blank"><img src="http://i67.tinypic.com/ir1i6v.jpg" border="0" alt="Image and video hosting by TinyPic" width=80%></a>
+        <img src="http://i67.tinypic.com/ir1i6v.jpg" border="0" alt="Image and video hosting by TinyPic" width=80%>
                
         <p>Another problem we faced was to find letter boundaries, this was done using edge filtering. Since edge filtering was used we were not able to form words where a certain letter is consecutively repeated.</br> To remove this drawback and also to include a word auto-correct feature, we implemented a word speller(using autocorrect library in python). The combination of letter edge filtering along with word prediction enabled us to create words using fingerspelling gestures. Additionally, it also increased our overall datasets spread as more letters could be incorporated into words due to the auto-correct feature.
         </p>
