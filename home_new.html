@@ -107,24 +107,44 @@
 <div id="fullpage">
     <header class="project" data-tooltip="Home">
         <div class="title-block">
-            <div class="subtitle">Projects Made By</div>
-            <div class="title">Sourabh Shetty</div>
+            <div class="subtitle">Fingerspeller</div>
+            <div class="title">American Sign Language</div>
         </div>
     </header>
     <div id="argus" class="project overlay" data-tooltip="Argus">
         <div id="argus-text" class="project-text">
-            <h1>Argus</h1>
-            <h3>An Android app to secure your desktop</h3>
-            <a href="https://github.com/thesourabh/argus" class="download-now">SEE CODE</a>
+        <div id="content">
+        
+        <!-- insert the page content here -->
+        <h1>Introduction</h1>
+        <p>The only mode of offline communication for hearing-impaired persons is through sign language. Learning the sign language is convoluted and has many conventions. The aim of this project is to develop an American Sign Language translator in order to mitigate the aforementioned difficulties. Another aim of this project is to develop a hand gesture recognition system to establish human computer interaction.</p>
+         
+        </div>
+        <div id = 'content_video'>
+        
+        <!-- insert your sidebar items here -->
+         <iframe width="480" height="315"
+         src="https://www.youtube.com/embed/GhI2VwPll0k">
+         </iframe>
+                
+        </div>
+
         </div>
     </div>
     <div id="mapster" class="project" data-tooltip="Mapster">
-        <div id="mapster-text" class="project-text">
-            <h1>Mapster</h1>
-            <h3>Find Instagram pictures posted anywhere in the world by clicking on a map</h3>
-            <a href="https://github.com/thesourabh/Mapster" class="download-now">SEE CODE</a>
-        </div>
-        <iframe id="mapster-video" class="project-video" width="560" height="315" src="https://www.youtube.com/embed/P_ouYTodgQI" frameborder="0" allowfullscreen> </iframe>
+        <div id="content1">
+        <!-- insert the page content here -->
+        <h1>Datasets Used</h1>
+        <p>The code was first tested with the Triesch Dataset, after which we created our own dataset, to suit our testing conditions (unideal) as well as, expand our letter-base</p>
+        
+          <h3>Triesch Dataset</h3> <p>Triesch dataset contains letters a,b,c and v against 3 different backgrounds as shown below.</p>
+          <a href="http://tinypic.com?ref=25heao6" target="_blank"><img src="http://i65.tinypic.com/25heao6.jpg" border="0" alt="Image and video hosting by TinyPic"></a>
+
+          <h3>User Dataset</h3><p>The created dataset contains images of letters a,b,c,d,g,i,l,v and y, recorded at different angles and at different distances wrt the camera. <br/>This variation is introduced in order to introduce tolerances for orientation and scale.
+          <a href="http://tinypic.com?ref=2nu6kvk" target="_blank"><img src="http://i66.tinypic.com/2nu6kvk.jpg" border="0" alt="Image and video hosting by TinyPic"></a>      
+          <h4>Data Augmentation</h4>
+          <p>Left-Right Hands -> We generate a set of rotated images from the existing images to help train our model to make it more robust.<br/>Tilt/Zoom -> Generated set of images with different levels of tilt and zoom to increase the variety of the training dataset.</p>
+      </div>
     </div>
     <div id="scrcrw" class="project overlay" data-tooltip="scrcrw">
         <div id="scrcrw-text" class="project-text">
@@ -133,11 +153,23 @@
             <a href="http://www.scrcrw.com/" class="download-now">SEE MORE</a>
         </div>
         <div class="browser-mockup project-image" id="scrcrw-image">
-			<a href="img/screens/full/scrcrw.png">
-				<img src="img/screens/scrcrw.jpg" />
-			</a>
+			<img id="myImg" src="imageSegmentation.jpg" alt="Trolltunga, Norway" width="300" height="200">
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- The Close Button -->
+  <span class="close">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>
         </div>
     </div>
+
     <div id="spark" class="project overlay" data-tooltip="Spark Cinema">
         <div id="spark-text" class="project-text">
             <h1>Spark Cinema</h1>
@@ -242,6 +274,27 @@ $(document).ready(function() {
 
   ga('create', 'UA-11958202-9', 'auto');
   ga('send', 'pageview');
+
+  // Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementById('myImg');
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+    modal.style.display = "none";
+}
 
 </script>
 
