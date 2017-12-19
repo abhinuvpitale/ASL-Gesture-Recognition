@@ -102,3 +102,13 @@ for i = 1:5
 end
 
 
+%% PCA for HoG
+
+
+for i = 1:9
+    bIm{i} = getBoundary(threshIm{i});
+    hogIm{i} = extractHOGFeatures(bIm{i}.boundedImage);
+end;
+
+hogArr = double(reshape(cell2mat(hogIm),[],size(hogIm,2)));
+[PC,score,latent,ts,explained]=pca(hogArr);
