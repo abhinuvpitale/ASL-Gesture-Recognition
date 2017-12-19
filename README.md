@@ -2,6 +2,7 @@
 # ASL-Gesture-Recognition
 
 Link to the website : https://abhinuvpitale.github.io/ASL-Gesture-Recognition/
+Link to the demo : https://youtu.be/nuG3TJhEyko
 
 *Setup*
 
