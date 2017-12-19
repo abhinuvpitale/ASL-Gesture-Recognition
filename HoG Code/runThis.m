@@ -1,139 +1,170 @@
-% Load the dataset with the updated boundary box.
-% Use this to generate features
 clc;
+close  all;
 clear all;
-close all;
 
+%% Model 1 - Trained only on HoG for the entire image
 
-%% Load the dataset
+%mdl = load('osdNewLetterSVM.mat');
+mdl = load('boundaryOSD_SVM.mat'); % uses the boundary box extracted Hog features from the osd augmented 10 letter dataset.
 
-path = 'C:\Courses\Computer Vision\ASL Gesture Recognition\Datasets\osd\Dataset';
-dirFolders = dir(path);
-letter = ['abcdefghijklmnopqrstuvwxyz'];
-count = 1;
-for i=3:size(dirFolders,1)
-    %if size(dirFolders(i).name,2) ~= 1
-    dataset.letter = dirFolders(i).name(1);
-    newPath = strcat(path,'\',dirFolders(i).name);
-    files = dir(newPath);
-    [dataset.originalIm,dataset.thresholdIm,dataset.area,dataset.defects,dataset.hull] = loadFiles(newPath,files);
-    datasets{count} = dataset;
-    count = count + 1;
-    %end
-end
-nDatasets = count-1;
-
-clearvars dataset
-clearvars files
-clearvars i
-clearvars count
-clearvars letter
-
-%% add boundary features to the dataset 
-
-%Insert all the thresholded matrices in a single one and create a response
-%matrix
-nObservations = 1;
-for i=1:nDatasets
-    threshImTemp = datasets{i}.thresholdIm;
-    currLetter = datasets{i}.letter;
-    nThreshIm = size(threshImTemp,2);
-    threshIm(nObservations:nObservations+nThreshIm-1) = threshImTemp; 
-    response(nObservations:nObservations+nThreshIm-1) = repmat(currLetter,1,nThreshIm);
-    nObservations = nObservations + nThreshIm - 1;
-end;
-
-clearvars currLetter
-clearvars nThreshIm
-%% Generate boundary box thresholded images
-
-for i = 1:nObservations
-    bIm{i} = getBoundary(threshIm{i});
-    %imwrite(bIm{i}.boundedImage,strcat('.\bounded\bound',num2str(i),'.jpg'));
-end;    
-
-%% get Ratio of Areas
-for i = 1:nObservations
-    ratio(i) = bIm{i}.ratio;
-end;
-%% see sizes
-for i = 1:nObservations
-    height(i) = bIm{i}.height;
-    width(i) = bIm{i}.width;
-end;
-%% PCA
-data = [height;width;ratio]'
-data = zscore(data)
-
-[PC,score,latent,ts,explained]=pca(data);
-
-dataset = 'abcdgilvy'
-
-figure(2)
-hold on;
-for i = 1:numel(dataset)
-  plot(score(find(response == dataset(i)),1),score(find(response == dataset(i)),2),'.','MarkerSize',15)
-  legend(plot)
-end;
-
-%% try Fast features
-for i = 1:nObservations
-    temp = detectSURFFeatures(bIm{i}.boundedImage);
-    boo(i) = temp.Count;
-end;
-
-%% rough Space
-
-for i = 100:nObservations
-    temp = bIm{i}.boundedImage;
-    se = strel('disk',1);
+mdl = mdl.mdl;
+figure(1);
+while true    
+    system('python imgSave.py');
+    thresIm = imread('threshImg.jpg');
     figure(1);
-    subplot(2,2,1);
-    imshow(temp);
-    subplot(2,2,2);
-    imshow(imopen(temp,se));
-    subplot(2,2,3);
-    imshow(imclose(temp,se));
-    subplot(2,2,4);
-    imshow(temp - imerode(temp,se))
-    pause(0.1)
+    title('Thresholded Image');
+    imshow(thresIm);
+    orgIm = imread('origImg.jpg');
+    figure(2);
+    imshow(orgIm);
+    figure(3);
+    imshow(imerode(thresIm,strel('disk',5)));
+    
+    bIm = getBoundary(thresIm);
+    hog = extractHOGFeatures(imresize(bIm.boundedImage,[150 150]));
+    %hog = extractHOGFeatures(thresIm);
+    prediction = predict(mdl,hog)  
+    text(1,1,prediction,'Color','red','FontSize',20)
+    
 end;
 
-%% I think I need to normalise the bounded Boxes before feature extraction.
+%% Feature Extraction -  used to display the various features we extraced
+fileID = fopen('Dataset.txt','w');  
+while true    
+    system('python imgSave.py');
+    thresIm = imread('threshImg.jpg');
+    figure(1);
+    title('Thresholded Image');
+    imshow(thresIm);
+    orgIm = imread('origImg.jpg');
+    figure(2);
+    imshow(orgIm);
+    
+    bIm = getBoundary(thresIm); 
+    fprintf(fileID,'%f %f %f \n',bIm.ratio,bIm.height,bIm.width);
+    bIm = bIm.boundedImage;      
+    figure(3);
+    imshow(bIm)
+    
+    edgeIm = bIm - imerode(bIm,strel('disk',1));
+    figure(4);
+    imshow(edgeIm)
 
-for i = 1:nObservations
-    bImResized{i} = imresize(bIm{i}.boundedImage,[150,150])
-    imshow(bImResized{i})
-    pause(0.1)
+    figure(5);
+    erode = imerode(thresIm,strel('disk',10));
+    imshow(erode)
+    
 end;
-%% Train a SVM on the boundedbox region using HoG
+fclose(fileID);
 
+%% Try HSV
 
-for i =1:nObservations
-    boundaryFeatures{i} = extractHOGFeatures(bImResized{i});
+while true
+    system('python imgSave.py');
+    orgIm = imread('origImg.jpg');
+    figure(1);
+    imshow(orgIm);
+    
+    hsvIm = rgb2hsv(orgIm);
+    figure(2);
+    imshow(hsvIm);
+    
+    figure(3);
+    imshow(hsvIm(:,:,1));
+
+    
+    figure(4);
+    imshow(hsvIm(:,:,2));
+    
+    figure(5);
+    imshow(hsvIm(:,:,3));
 end;
     
+%% Final Model - Contains the HoG trained on the boundary boxed images along with height, width and ratio features.
+mdl = load('boundaryOSD_SVM.mat'); % uses the boundary box extracted Hog features from the osd augmented 10 letter dataset.
+mdl = mdl.mdl;
+totPred = 'Letter Predicted -> ' ;
+lastPrediction = ' ';
+count = 1;
+lettersFile = fopen('letters.txt','w');
+    
+f1 = figure(1) ;
+axes1  = findall(f1,'type','auto');
+f2 = figure(2) ;
+axes2  = findall(f2,'type','auto');
+f3 = figure(3) ;
+axes3  = findall(f3,'type','auto');
+f4 = figure(4) ;
+axes4  = findall(f4,'type','auto');
+f5 = figure(5) ;
+axes5  = findall(f5,'type','auto');
+while true
+    
+    system('python imgSave.py');
+    
+    thresIm = imread('threshImg.jpg');    
+    orgIm = imread('origImg.jpg');
+    
+    bIm = getBoundary(thresIm);
+    hog = extractHOGFeatures(imresize(bIm.boundedImage,[150 150]));
+    %hog = extractHOGFeatures(thresIm);
+    prediction = predict(mdl,hog)  ;
+    if prediction ~= lastPrediction
+        totPred = strcat(totPred ,prediction);
+        count = count + 1;
+        fprintf(lettersFile,prediction);
+    
+    end
+    lastPrediction = prediction;
+    clf(f1)
+    figure(f1)
+    imshow(orgIm);
+    title('Original Image');
+    rectangle('Position',[bIm.y bIm.x bIm.width bIm.height],'EdgeColor','r');
+    
+    clf(f2)
+    figure(f2);
+    imshow(thresIm);
+    title('Binary Thresholded Image');
+    rectangle('Position',[bIm.y bIm.x bIm.width bIm.height],'EdgeColor','r');
+    
+    clf(f3)
+    figure(f3);
+    mTextBox = uicontrol('style','text');
+    set(mTextBox,'FontSize',20);
+    set(mTextBox,'String',totPred);
+    set(mTextBox,'Position',[1 1 600 60]);
+    
+    text(1,1,prediction,'Color','red','FontSize',20)
+   
+    clf(f4)
+    figure(f4);    
+    imshow(bIm.boundedImage);
+    title('Bounded Image');
+    %set(mTextBox,'Position',[100 100 1000 1000])
+    
+    %fclose(lettersFile);
+    if count > 4
+        wordFile = fopen('words.txt','r');
+        word = fscanf(wordFile,'%s')
+        fgetl(wordFile);
+        
+        clf(f5)
+        figure(f5);
+        mTextBox1 = uicontrol('style','text');
+        set(mTextBox1,'FontSize',20);
+        set(mTextBox1,'String',strcat('Current Word -> ',word));
+        set(mTextBox1,'Position',[1 1 600 60]);
+        totPred = strcat(totPred,'-')
+        %lettersFile = fopen('letters.txt','r');
+        fgetl(lettersFile);
+        fclose(lettersFile);
+        lettersFile = fopen('letters.txt','w');    
+        count = 1;
+    end;
+    
 
-k = 0.99;
-[trainHog trainLetter testHog testLetter] = splitdataset(boundaryFeatures,response,k) ;
-trainHog = double(reshape(cell2mat(trainHog),[],size(trainHog,2)));
-testHog = double(reshape(cell2mat(testHog),[],size(testHog,2)));
-
-mdl = fitcecoc(trainHog',trainLetter');
-
-Y = predict(mdl,testHog')
-accuracy = numel(find(Y-testLetter' == 0))/numel(Y) * 100
-
-%% Plot Ratios
-
-figure(1);
-scatter(double(response),ratio,'.');
-title('Ratio of the Bounding Boxes to original Image')
-
-figure(2);
-scatter(double(response),width,'.');
-title('Width of the Letter')
-
-figure(3);
-scatter(double(response),height,'.');
-title('Height of the Letter')
+    
+    
+end
