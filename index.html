@@ -50,12 +50,12 @@
         <div id="content1"></a>
         <!-- insert the page content here -->
         <h1>Datasets Used</h1>
-        <p>The code was first tested with the Triesch Dataset, after which we created our own dataset, to suit our testing conditions (unideal) as well as, expand our letter-base</p>
+        <p>The code was first tested with the Triesch Dataset, after which we created our own dataset to suit our testing conditions (unideal) as well as expand our letter-base</p>
         
           <h3>Triesch Dataset</h3> <p>Triesch dataset contains letters a,b,c and v against 3 different backgrounds as shown below.</p>
           <img src="http://i65.tinypic.com/25heao6.jpg" border="0"></a>
 
-          <h3>User Dataset</h3><p>The created dataset contains images of letters a,b,c,d,g,i,l,v and y, recorded at different angles and at different distances wrt the camera. <br/>This variation is introduced in order to introduce tolerances for orientation and scale.
+          <h3>User Dataset</h3><p>The created dataset contains images of letters a,b,c,d,g,i,l,v and y, recorded at different angles and at different distances with respect to the camera. <br/>This variation is introduced in order to introduce tolerances for orientation and scale.
           <img src="http://i66.tinypic.com/2nu6kvk.jpg" border="0">    
           <h4>Data Augmentation</h4>
           <p>Left-Right Hands -> We generate a set of rotated images from the existing images to help train our model to make it more robust.<br/>Tilt/Zoom -> Generated set of images with different levels of tilt and zoom to increase the variety of the training dataset.</p>
@@ -71,7 +71,7 @@
           <h3>Feature Extraction</h3><p>Various features extracted for an image include the hull points, contour area, convexity defect coordinates, HoG features and bounding box. We particularly selected the HoG features due to clear distinction obtained for individual characters.   
           <p>The <i><b>Contour</b></i> in the image contains a set of all connected points which form the outline of the hand region.</br>The <i><b>Hull</b></i> contains the area included by connecting the extremities (bulging points) of the contour in the detected hand region.</br>The <i><b>Convexity Defects</b></i> are convex regions formed by the area between the fingers in the contour of the hand region. These are called defects because the area between the fingers forms a convex curve in an otherwise concave hull.</br>The <i><b>Bounding Box</b></i> is the minimum rectangle large enough to crop the entire hand region. Computing the ratio of contour area with respect to bounding box area makes the detection invariant to scale.</p>
           <img src="http://i68.tinypic.com/jb76gx.jpg" border="0">
-          <p><i><b>HoG Features</b></i> have been computed on the contours of each letter in the database. HOG features encode the occurrences of gradient orientations in portions of an image, so it is expected from them to describe characteristic edges regarding the shape of the hands. The figure below shows the HoG features for each letter in the dataset.</p>
+          <p><i><b>HoG Features</b></i> have been computed on the contours of each letter in the database. HOG features compute the occurrences of gradient orientations in portions of an image, so we can describe characteristic edges regarding the shape of the hands. The figure below shows the HoG features for each letter in the dataset.</p>
 
           <!-- Trigger the Modal -->
           <img id="myImg" src="http://i64.tinypic.com/vrskya.jpg" alt="HoG Features" width=45% height="300" >
@@ -145,18 +145,31 @@
         </tr>        
         </table>
         <p>Initially we started training out models with only 4 different letters. However this was not enough as when the hands were changed(right -> left), the accuracy of the classifier fell.</br> We also included height, width and the ratio of the bounding box in training the classifier. These features were given more significance as they were better spread out as seen from the PCA plot.</p> 
-        <img src="http://i67.tinypic.com/ir1i6v.jpg" border="0" alt="Image and video hosting by TinyPic" width=80%>
+        <img src="http://i67.tinypic.com/ir1i6v.jpg" border="0" width=60%>
                
         <p>Another problem we faced was to find letter boundaries, this was done using edge filtering. Since edge filtering was used we were not able to form words where a certain letter is consecutively repeated.</br> To remove this drawback and also to include a word auto-correct feature, we implemented a word speller(using autocorrect library in python). The combination of letter edge filtering along with word prediction enabled us to create words using fingerspelling gestures. Additionally, it also increased our overall datasets spread as more letters could be incorporated into words due to the auto-correct feature.
         </p>
         <p>The below video demonstrates how correct words are predicted from sequence of 4 letters. We provided a series of characters 'b','a','y','d' and it displayed "BAD" as the corrected output.</p>
-        <iframe width="640" height="315"
+        <iframe width="1280" height="720"
          src="https://www.youtube.com/embed/nuG3TJhEyko">
          </iframe>
-        <!-- insert your sidebar items here -->                 
+         </br>
+        <!-- insert your sidebar items here -->
+        <div id="content1"></a> 
+        <!-- insert the page content here -->
+        <h1>References</h1>
+        <p><a href="https://www.hindawi.com/journals/tswj/2014/267872/">Hand Segmentation Paper</a></br><a href="         https://docs.opencv.org">Feature Extraction Python</a></br><a href="http://ieeexplore.ieee.org/document/7162670/">Hand Gesture Detection using HoG</a></br><a href="https://filebox.ece.vt.edu/~F15ECE5554ECE4984/resources/final_webpage.zip">Website Template</a></p>
+        </div>
+        <div id="content1"></a> 
+        <!-- insert the page content here -->
+        <h1>Conclusion</h1>
+        <p>In this project we have demonstrated an application of Hand-Gesture recognition in ASL fingerspelling by detecting 9 letters of the English alphabet. Future work will primarily comprise of expanding the dataset to include more letters.</p>
+        </div>                         
       </div>      
       </div>
     </div>
+    </br>
+    </br>
     <div id="content_footer"></div>
     <div id="footer">
       <p>Contributors: Abhinuv Pitale | Omkar Dhande | Pranavi Rambhakta | Varun Kumthekar</p>
