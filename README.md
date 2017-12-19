@@ -39,7 +39,12 @@ Saves the SVM classifier as .mat file to be used for testing.
 7. testModels.m - This file was used as rough space to see how various models worked and to see which features worked well for our problem.
 
 Models Present in this file ->
+
+
 osdSVM - 4 letters, no augmentation
+
 osdAugSVM - 4 letters with augmentation
+
 osdNewLetterSVM - 9 letters, without extended feature set
+
 boundaryOSD_SVM - 9 letters, with augmentation and extended features set.
