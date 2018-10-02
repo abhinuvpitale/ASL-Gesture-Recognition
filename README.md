@@ -62,5 +62,8 @@ This file was used as rough space to see how various models worked and to see wh
 ## Authors
 - [Abhinuv Nitin Pitale](https://github.com/abhinuvpitale)
 
+
+See also the list of [contributors](https://github.com/abhinuvpitale/ASL-Gesture-Recognition/graphs/contributors) who participated in this project.
+
 ## License
 This project is licensed under the Apache License - see the [LICENSE](LICENSE) file for details
